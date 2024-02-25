@@ -1,0 +1,43 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <form id="inputForm" style="text-align: center;">
+    <input type="file" name="file">
+        <div>
+          <button type="button" class="btn btn-info" onclick="getResult()" value="submit"
+            style="cursor: pointer;">Submit</button>
+        </div>
+  </form>
+
+  <div class="row" id="result">
+    
+  </div>
+
+  <script>
+    function getResult() {
+      var form_data = new FormData($('#inputForm')[0]);
+      $.ajax({
+          type: 'POST',
+          url: '/predict',
+          data: form_data,
+          contentType: false,
+          cache: false,
+          processData: false,
+          dataType: 'json', // Specify the expected data type
+          success: function(response) {
+              // Extract and format the relevant information from the JSON response
+              var resultHtml = "<p>Predicted Flower Type:</p><ul>";
+              $.each(response.data, function(index, item) {
+                  resultHtml += "<li>" + item + "</li>";
+              });
+              resultHtml += "</ul>";
+              // Display the formatted result in the #result div
+              $("#result").html(resultHtml);       
+          },
+          error: function(xhr, status, error) {
+              // Handle any errors that occur during the AJAX request
+              console.error(xhr.responseText);
+              $("#result").html("<p>Error: Unable to get result.</p>");
+          }
+      });
+  }
+  </script>
