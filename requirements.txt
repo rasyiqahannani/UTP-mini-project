@@ -1,0 +1,7 @@
+# To ensure app dependencies are ported from your virtual environment/host machine into your container, run 'pip freeze > requirements.txt' in the terminal to overwrite this file
+fastapi==0.110.0
+uvicorn==0.27.1
+joblib
+pandas
+scikit-learn==1.4.1.post1
+python-multipart==0.0.9
